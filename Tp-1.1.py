@@ -6,6 +6,7 @@
 import numpy as np
 import pandas as pd
 
+
 def mensaje():
     print ("Bienvenido a la ruleta!!")
 
@@ -14,10 +15,17 @@ def ruleta(n):
     return np.random.randint(0, 36, n)
 
 
+def AnalizarDatos(datos):
+    a = pd.value_counts(datos) #encontras la frecuencia absoluta de cada numero
+    dataframe = pd.DataFrame(a, columns=["FrAbs"])
+    print(dataframe)
+
+
 def main():
     mensaje()
     d = ruleta(int(input("Ingrese la cantidad de muestras que desea: ")))
-    print(d)
+    #print(d)
+    AnalizarDatos(d)
 
 
 main()
