@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random as rn
 import matplotlib.ticker as tick
+import statistics as st
+
 
 n_muestras = 1000
 min_n = 0
@@ -21,6 +23,7 @@ varianza_media = []
 
 def cambiar_y(x, pos):
     return x / len(data)
+
 
 def plot_frAbs(d):  # graficar histograma de frecuencias absolutas
     fig, ax = plt.subplots()
@@ -52,7 +55,7 @@ def plot_media(m):  # graficar histograma de media
     plt.show()
 
 
-def plot_media_media(mm):   # graficar histograma de media de la media
+def plot_media_media(mm):  # graficar histograma de media de la media
     fig, ax = plt.subplots()
     plt.plot(list(range(len(mm))), mm, color='k')
     ax.set_xlabel('Cantidad de tiradas')
@@ -60,22 +63,45 @@ def plot_media_media(mm):   # graficar histograma de media de la media
     plt.title("Histograma de media de la media")
     plt.show()
 
-def plot_mymm(m, mm):
+
+def plot_mymm(m, mm):   #graficar conjuntamente media y media de media
     fig, ax = plt.subplots()
     plt.plot(list(range(len(m))), m, color='k')
     plt.plot(list(range(len(mm))), mm, color='white')
-    ax.set_xlabel('Cantidad de tiradas')
-    ax.set_ylabel('Medias')
+    ax.xlabel('Cantidad de tiradas')
+    ax.ylabel('Medias')
     plt.title("Histograma de media de la media")
     plt.show()
 
+def plot_varianza(v):
+    fig, ax = plt.subplots()
+    plt.plot(list(range(len(v))), v, color='k')
+    ax.set_xlabel('Cantidad de tiradas')
+    ax.set_ylabel('varianza')
+    plt.title("Histograma de varianza")
+    plt.show()
 
-def plot(d, m, mm):
+
+
+def plot_varianza_media(vm):
+    fig, ax = plt.subplots()
+    plt.plot(list(range(len(vm))), vm, color='k')
+    ax.set_xlabel('Cantidad de tiradas')
+    ax.set_ylabel('varianza de la media')
+    plt.title("Histograma de varianza de la media")
+    plt.show()
+
+
+
+def plot(d, m, mm, v, vm):
     plot_frAbs(d)
     plot_frRel(d)
     plot_media(m)
     plot_media_media(mm)
     plot_mymm(m, mm)
+    plot_varianza(v)
+    plot_varianza_media(vm)
+
 
 
 def mostrar_datos(d):
@@ -88,9 +114,11 @@ def main():
         data.append(rn.randint(min_n, max_n))
         media.append(np.mean(data))
         media_media.append(np.mean(media))
-        # if i >=2:
+        if i >=2:
+            varianza.append(st.variance(data))
+            varianza_media.append(st.variance(media))
 
-    plot(data, media, media_media)
+    plot(data, media, media_media, varianza, varianza_media)
     mostrar_datos(data)
 
 
