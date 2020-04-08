@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random as rn
 import matplotlib.ticker as tick
+import statistics as st
+
 
 n_muestras = 1000
 min_n = 0
@@ -63,9 +65,11 @@ def main():
         data.append(rn.randint(min_n, max_n))
         media.append(np.mean(data))
         media_media.append(np.mean(media))
-        # if i >=2:
+        if i >=2:
+            varianza.append(st.mean(data))
+            varianza_media.append(st.mean(media))
 
-    plot(data, media, media_media)
+    plot(data, media, media_media, varianza, varianza_media)
     mostrar_datos(data)
 
 
