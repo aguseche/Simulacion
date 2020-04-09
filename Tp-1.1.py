@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random as rn
 import matplotlib.ticker as tick
-import statistics as st
 
 
 n_muestras = 1000
@@ -19,13 +18,14 @@ media = []
 media_media = []
 varianza = []
 varianza_media = []
+desviacion = []
 
 
 def cambiar_y(x, pos):
     return x / len(data)
 
 
-def plot(d, m, mm):
+def plot(d, m, mm, v, vm):
     # graficar histograma de frecuencias absolutas
 
     fig, ax = plt.subplots()
@@ -46,13 +46,17 @@ def plot(d, m, mm):
     plt.title("Histograma de frecuencia absoluta")
     plt.show()
 
+
+def plot_2(m, mm):
     # graficar histograma de media
-    fig, ax = plt.subplots()
-    plt.plot(list(range(len(m))), m, color='k')
-    ax.set_xlabel('Cantidad de tiradas')
-    ax.set_ylabel('Media')
-    plt.title("Histograma de media")
-    plt.show()
+    plt.subplots(2, 2, 1)
+    plt.title('Media')
+    plt.plot(m)
+
+    # graficar histograma de media de media
+    plt.subplots(2, 2, 2)
+    plt.title('Media')
+    plt.plot(mm)
 
 
 def mostrar_datos(d):
@@ -65,11 +69,13 @@ def main():
         data.append(rn.randint(min_n, max_n))
         media.append(np.mean(data))
         media_media.append(np.mean(media))
+        desviacion.append(np.std(data))
         if i >=2:
-            varianza.append(st.mean(data))
-            varianza_media.append(st.mean(media))
+            varianza.append(np.var(data))
+            varianza_media.append(np.var(media))
 
-    plot(data, media, media_media, varianza, varianza_media)
+    #plot(data, media, media_media, varianza, varianza_media, desviacion)
+    plot_2(media, media_media)
     mostrar_datos(data)
 
 
