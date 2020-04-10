@@ -19,6 +19,7 @@ media = []
 media_media = []
 varianza = []
 varianza_media = []
+desviacion = []
 
 
 def cambiar_y(x, pos):
@@ -91,17 +92,23 @@ def plot_varianza_media(vm):
     plt.title("Histograma de varianza de la media")
     plt.show()
 
+def plot_desviacion(des):
+    plt.subplot(2, 2, 1)
+    plt.title('desviacion')
+    plt.xlabel('cantidad de tiradas')
+    plt.ylabel('desviacion')
+    plt.plot(des)
+    plt.show()
 
-
-def plot(d, m, mm, v, vm):
-    plot_frAbs(d)
-    plot_frRel(d)
-    plot_media(m)
-    plot_media_media(mm)
-    plot_mymm(m, mm)
-    plot_varianza(v)
-    plot_varianza_media(vm)
-
+def plot(d, m, mm, v, vm, des):
+    #plot_frAbs(d)
+    #plot_frRel(d)
+    #plot_media(m)
+    #plot_media_media(mm)
+    #plot_mymm(m, mm)
+    #plot_varianza(v)
+    #plot_varianza_media(vm)
+    plot_desviacion(des)
 
 
 def mostrar_datos(d):
@@ -114,11 +121,12 @@ def main():
         data.append(rn.randint(min_n, max_n))
         media.append(np.mean(data))
         media_media.append(np.mean(media))
+        desviacion.append(np.std(data))
         if i >=2:
             varianza.append(st.variance(data))
             varianza_media.append(st.variance(media))
 
-    plot(data, media, media_media, varianza, varianza_media)
+    plot(data, media, media_media, varianza, varianza_media, desviacion)
     mostrar_datos(data)
 
 

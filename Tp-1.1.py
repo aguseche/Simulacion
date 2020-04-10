@@ -7,12 +7,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random as rn
 import matplotlib.ticker as tick
+import statistics as st
 
-
+#constantes que representan la ruleta
 n_muestras = 1000
 min_n = 0
 max_n = 36
+base = np.arange(37)
 
+#listas para los datos almacenados
 data = []
 media = []
 media_media = []
@@ -20,48 +23,100 @@ varianza = []
 varianza_media = []
 desviacion = []
 
+#variables basadas en las constantes de la ruleta
+fabs_esperada = n_muestras / len(base)
+fr_esperada = 1 / len(base)
+media_esperada = np.mean(base)
+varianza_esperada = np.var(base)
+desviacion_esperada = np.std(base)
+
 
 def cambiar_y(x, pos):
-    return x / len(data)
+    return x / len(data) * 1.0
 
 
-def plot(d, m, mm, v, vm):
-    # graficar histograma de frecuencias absolutas
-
+def plot_frAbs(d):  # graficar histograma de frecuencias absolutas
     fig, ax = plt.subplots()
-    ax.hist(d, bins=max_n + 1)
+    ax.hist(d, bins=max_n + 1, edgecolor = "black")
+    ax.axhline(y=fabs_esperada, color = "yellow", label = "frecuencia esperada")
     fig.tight_layout()
     ax.set_xlabel('Numeros de la ruleta')
     ax.set_ylabel('Cantidad')
     plt.title("Histograma de frecuencia absoluta")
+    plt.legend()
     plt.show()
 
-    # graficar histograma de frecuencias relativas
+
+def plot_frRel(d):  # graficar histograma de frecuencias relativas
     fig, ax = plt.subplots()
-    ax.hist(d, bins=max_n + 1)
+    ax.hist(d, bins=max_n + 1, edgecolor ="black")
     ax.yaxis.set_major_formatter(tick.FuncFormatter(cambiar_y))  # para cambiar los valores mostrados en y
+    ax.axhline(y=fr_esperada * 1000, color="yellow", label = "frecuencia esperada") # se multiplica x 1000 la frecuencia por la modificacion anterior
     fig.tight_layout()
     ax.set_xlabel('Numeros de la ruleta')
     ax.set_ylabel('Cantidad / 100')
-    plt.title("Histograma de frecuencia absoluta")
+    plt.title("Histograma de frecuencia relativa")
+    plt.legend()
     plt.show()
 
 
-def plot_2(m, mm):
-    # graficar histograma de media
-    plt.subplots(2, 2, 1)
-    plt.title('Media')
-    plt.plot(m)
+def plot_1(m, mm, v, vm, des):
+    #Grafica de media
+    plt.subplot(2, 3, 1)
+    plt.xlabel('Cantidad de tiradas')
+    plt.ylabel('Media')
+    plt.title("Media")
+    plt.plot(m, label="media")
+    plt.plot([0, n_muestras], [media_esperada, media_esperada], label="media esperada")
+    plt.legend()
 
-    # graficar histograma de media de media
-    plt.subplots(2, 2, 2)
-    plt.title('Media')
-    plt.plot(mm)
+    #Grafica de media de media
+    plt.subplot(2, 3, 2)
+    plt.xlabel('Cantidad de tiradas')
+    plt.ylabel('Media de la media')
+    plt.title("Media de la media")
+    plt.plot(mm, label="media de la media")
+    plt.plot([0, n_muestras], [media_esperada, media_esperada], label="media esperada")
+    plt.legend()
 
+    #Grafica que relaciona media y media de media
+    plt.subplot(2, 3, 3)
+    plt.plot(list(range(len(m))), m, label="media")
+    plt.plot(list(range(len(mm))), mm, color='r', linestyle="-.", label="media de media")
+    plt.plot([0, n_muestras], [media_esperada, media_esperada], label="media esperada")
+    plt.xlabel('Cantidad de tiradas')
+    plt.ylabel('Medias')
+    plt.title("Relacion entre media y media de media")
+    plt.legend()
 
-def mostrar_datos(d):
-    for i in range(min_n, max_n + 1):
-        print(str(i) + ": " + str(d.count(i)))
+    #Grafica de la varianza
+    plt.subplot(2, 3, 4)
+    plt.title('Varianza')
+    plt.xlabel('cantidad de tiradas')
+    plt.ylabel('varianza')
+    plt.plot(v, label="varianza")
+    plt.plot([0, n_muestras], [varianza_esperada, varianza_esperada], label="varianza esperada")
+    plt.legend()
+
+    #Grafica de la varianza de la media
+    plt.subplot(2, 3, 5)
+    plt.title('Varianza de la media')
+    plt.xlabel('cantidad de tiradas')
+    plt.ylabel('varianza media')
+    plt.plot(vm, label="varianza media")
+    plt.plot([0, n_muestras], [varianza_esperada, varianza_esperada], label="varianza esperada")
+    plt.legend()
+
+    #Grafica de la desviacion estandar
+    plt.subplot(2, 3, 6)
+    plt.title('Desviacion estandar')
+    plt.xlabel('cantidad de tiradas')
+    plt.ylabel('Desviacion')
+    plt.plot(des, label="desviacion estandar")
+    plt.plot([0, n_muestras], [desviacion_esperada, desviacion_esperada], label="desviacion esperada")
+    plt.legend()
+
+    plt.show()
 
 
 def main():
@@ -70,13 +125,13 @@ def main():
         media.append(np.mean(data))
         media_media.append(np.mean(media))
         desviacion.append(np.std(data))
-        if i >=2:
-            varianza.append(np.var(data))
-            varianza_media.append(np.var(media))
+        if i >= 2:
+            varianza.append(st.variance(data))
+            varianza_media.append(st.variance(media))
 
-    #plot(data, media, media_media, varianza, varianza_media, desviacion)
-    plot_2(media, media_media)
-    mostrar_datos(data)
+    plot_frAbs(data)
+    plot_frRel(data)
+    plot_1(media, media_media, varianza, varianza_media, desviacion)
 
 
 main()
