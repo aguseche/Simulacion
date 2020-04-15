@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import random as rn
 import matplotlib.ticker as tick
 import statistics as st
+from random import randint, seed
 
 #constantes que representan la ruleta
 n_muestras = 1000
@@ -120,8 +121,9 @@ def plot_1(m, mm, v, vm, des):
 
 
 def main():
+    seed(801)
     for i in range(n_muestras):
-        data.append(rn.randint(min_n, max_n))
+        data.append(randint(min_n, max_n))
         media.append(np.mean(data))
         media_media.append(np.mean(media))
         desviacion.append(np.std(data))
