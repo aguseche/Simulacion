@@ -2,7 +2,7 @@ from random import randint, seed
 import matplotlib.pyplot as plt
 import numpy as np
 
-nro_elegido = 16  # int(input('Elija un numero de la ruleta (0-36):'))
+nro_elegido = 0  # int(input('Elija un numero de la ruleta (0-36):'))
 # while nro_elegido < 0 or nro_elegido > 36:
 #    nro_elegido = int(input('Elija un numero de la ruleta (0-36):'))
 
@@ -25,6 +25,7 @@ for i in range(iteraciones):
     desv.clear()
     var.clear()
     valores.clear()
+    seed(800+i)
 
     for t in range(tiradas):
         rand = randint(0, 36)
