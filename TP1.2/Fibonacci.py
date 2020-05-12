@@ -10,7 +10,7 @@ max_n = 36
 numeros_rojos = [1, 3, 5, 7, 9, 12, 14, 16, 18, 20, 21, 23, 25, 27, 29, 31, 32, 34, 36]
 # numeros_negros = [2, 4, 6, 8, 10, 11, 13, 15, 17, 19, 22, 24, 26, 28, 30, 33, 35]  Esta de referencia nomas, no se usa
 
-# Fibonacci              consiste en que si perdes te moves para la derecha 1 punto, si ganas te moves dos para la izq
+# Fibonacci  asdasdasd            consiste en que si perdes te moves para la derecha 1 punto, si ganas te moves dos para la izq
 lista_fibonacci = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
 
 # finito
